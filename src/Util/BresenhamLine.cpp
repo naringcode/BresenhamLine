@@ -10,8 +10,8 @@ void BresenhamLineCaseA(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
     int endX;
     int endY;
 
-    int width  = abs(x2 - x1);
-    int height = abs(y2 - y1);
+    int width  = abs(x2 - x1); // dx
+    int height = abs(y2 - y1); // dy
 
     int doubleWidth  = width  + width;
     int doubleHeight = height + height;
@@ -129,8 +129,8 @@ void BresenhamLineCaseB(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
 {
     // 항상 팔분면을 떠올리자.
     // -----
-    int width  = abs(x2 - x1);
-    int height = abs(y2 - y1);
+    int width  = abs(x2 - x1); // dx
+    int height = abs(y2 - y1); // dy
 
     int doubleWidth  = width  + width;
     int doubleHeight = height + height;
