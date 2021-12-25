@@ -135,8 +135,8 @@ void BresenhamLineCaseB(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
     int doubleWidth  = width  + width;
     int doubleHeight = height + height;
 
-    int dx;
-    int dy;
+    int compX;
+    int compY;
 
     int x;
     int y;
@@ -175,8 +175,8 @@ void BresenhamLineCaseB(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
 
         // 기울기가 완만하여 예각을 이룬다.
         // -----
-        dx = width;
-        dy = doubleHeight; // 2 * h
+        compX = width;
+        compY = doubleHeight; // 2h
 
         while (x <= endX)
         {
@@ -185,16 +185,16 @@ void BresenhamLineCaseB(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
 
             x++;
 
-            if (dy - dx < 0)
+            if (compY - compX < 0)
             {
                 // 평행 이동 -> 2h 누적
-                dy += doubleHeight;
+                compY += doubleHeight;
             }
             else
             {
                 // 평행 이동 후 아래로 한 칸 -> 2h - 2w 누적
-                dy += doubleHeight;
-                dx += doubleWidth; // dy - dx라 결국 빼기 때문에 덧셈으로 누적
+                compY += doubleHeight;
+                compX += doubleWidth; // dy - dx라 결국 빼기 때문에 덧셈으로 누적
 
                 y += incrementor;
             }
@@ -229,8 +229,8 @@ void BresenhamLineCaseB(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
 
         // 기울기가 가파라 둔각을 이룬다.
         // -----
-        dx = doubleWidth; // 2 * w
-        dy = height;
+        compX = doubleWidth; // 2w
+        compY = height;
 
         while (y <= endY)
         {
@@ -239,16 +239,16 @@ void BresenhamLineCaseB(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
     
             y++;
 
-            if (dx - dy < 0)
+            if (compX - compY < 0)
             {
                 // 평행 이동 -> 2w 누적
-                dx += doubleWidth;
+                compX += doubleWidth;
             }
             else
             {
                 // 평행 이동 후 아래로 한 칸 -> 2w - 2h 누적
-                dx += doubleWidth;
-                dy += doubleHeight; // dx - dy라 결국 빼기 때문에 덧셈으로 누적
+                compX += doubleWidth;
+                compY += doubleHeight; // dx - dy라 결국 빼기 때문에 덧셈으로 누적
     
                 x += incrementor;
             }
