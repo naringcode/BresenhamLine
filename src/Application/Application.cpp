@@ -151,7 +151,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     int cellEndX = s_EndX / 24;
                     int cellEndY = s_EndY / 24;
 
-                    BresenhamLineCaseB(cellStartX, cellStartY, cellEndX, cellEndY, &linePoints);
+                    BresenhamLineCaseA(cellStartX, cellStartY, cellEndX, cellEndY, &linePoints);
 
                     HBRUSH hGrayBrush = (HBRUSH)GetStockObject(GRAY_BRUSH);
                     HBRUSH hOldBrush  = (HBRUSH)SelectObject(hdc, hGrayBrush);

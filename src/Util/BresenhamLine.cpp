@@ -10,16 +10,16 @@ void BresenhamLineCaseA(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
     int endX;
     int endY;
 
-    int dx = abs(x2 - x1);
-    int dy = abs(y2 - y1);
+    int width  = abs(x2 - x1);
+    int height = abs(y2 - y1);
 
-    int doubleDx = dx + dx;
-    int doubleDy = dy + dy;
+    int doubleWidth  = width  + width;
+    int doubleHeight = height + height;
 
     int pointBound;
     int incrementor = 1;
 
-    if (dy < dx)
+    if (width > height)
     {
         // 기울기가 완만하면(1보다 작으면) 예각이다.
         // 이 경우에는 x축을 기준으로 p값을 체크해서 y를 증가시켜야 한다.
@@ -50,7 +50,7 @@ void BresenhamLineCaseA(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
             incrementor = -1;
         }
 
-        pointBound = doubleDy - dx; // p0 = 2dy - dx
+        pointBound = doubleHeight - width; // p0 = 2dy - dx
 
         while (x <= endX)
         {
@@ -61,11 +61,11 @@ void BresenhamLineCaseA(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
 
             if (pointBound < 0)
             {
-                pointBound = pointBound + doubleDy; // pnext = pk + 2dy
+                pointBound = pointBound + doubleHeight; // pnext = pk + 2dy
             }
             else
             {
-                pointBound = pointBound + doubleDy - doubleDx; // pnext = pk + 2dy - 2dx
+                pointBound = pointBound + doubleHeight - doubleWidth; // pnext = pk + 2dy - 2dx
 
                 y += incrementor;
             }
@@ -102,7 +102,7 @@ void BresenhamLineCaseA(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
             incrementor = -1;
         }
 
-        pointBound = doubleDx - dy; // p0 = 2dx - dy
+        pointBound = doubleWidth - height; // p0 = 2dx - dy
 
         while (y <= endY)
         {
@@ -113,11 +113,11 @@ void BresenhamLineCaseA(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
 
             if (pointBound < 0)
             {
-                pointBound = pointBound + doubleDx; // pnext = pk + 2dx
+                pointBound = pointBound + doubleWidth; // pnext = pk + 2dx
             }
             else
             {
-                pointBound = pointBound + doubleDx - doubleDy; // pnext = pk + 2dx - 2dy
+                pointBound = pointBound + doubleWidth - doubleHeight; // pnext = pk + 2dx - 2dy
 
                 x += incrementor;
             }
@@ -132,7 +132,7 @@ void BresenhamLineCaseB(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
     int width  = abs(x2 - x1);
     int height = abs(y2 - y1);
 
-    int doubleWidth  = width + width;
+    int doubleWidth  = width  + width;
     int doubleHeight = height + height;
 
     int dx;
@@ -183,6 +183,8 @@ void BresenhamLineCaseB(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
             BresenhamPoint p{ x, y };
             outPoints->emplace_back(p);
 
+            x++;
+
             if (dy - dx < 0)
             {
                 // 평행 이동 -> 2h 누적
@@ -196,8 +198,6 @@ void BresenhamLineCaseB(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
 
                 y += incrementor;
             }
-
-            x++;
         }
     }
     else
@@ -237,6 +237,8 @@ void BresenhamLineCaseB(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
             BresenhamPoint p{ x, y };
             outPoints->emplace_back(p);
     
+            y++;
+
             if (dx - dy < 0)
             {
                 // 평행 이동 -> 2w 누적
@@ -250,8 +252,6 @@ void BresenhamLineCaseB(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
     
                 x += incrementor;
             }
-    
-            y++;
         }
     }
 }
