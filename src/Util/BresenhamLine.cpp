@@ -16,13 +16,16 @@ void BresenhamLineCaseA(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
     int doubleWidth  = width  + width;
     int doubleHeight = height + height;
 
-    int pointBound;
+    int determinant;
     int incrementor = 1;
 
     if (width > height)
     {
         // 기울기가 완만하면(1보다 작으면) 예각이다.
         // 이 경우에는 x축을 기준으로 p값을 체크해서 y를 증가시켜야 한다.
+        // -----
+
+        // 팔분면 기준 예각에 해당하는 위치는 제 1팔분면, 제 4팔분면, 제 5팔분면, 제 8팔분면이다.
         // -----
         
         // 처리 기준이 x축 양의 방향이기 때문에 x값이 작은 점을 기준으로 삼는다.
@@ -36,7 +39,9 @@ void BresenhamLineCaseA(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
         }
         else
         {
-            // 제 3팔분면, 제 4팔분면, 제 5팔분면, 제 6팔분면을 무효화시킨다.
+            // 1) 제 4팔분면을 제 8팔분면에 위치시킨다.
+            // 2) 제 5팔분면을 제 1팔분면에 위치시킨다.
+            // -----
             x = x2;
             y = y2;
 
@@ -50,7 +55,7 @@ void BresenhamLineCaseA(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
             incrementor = -1;
         }
 
-        pointBound = doubleHeight - width; // p0 = 2dy - dx
+        determinant = doubleHeight - width; // p0 = 2dy - dx
 
         while (x <= endX)
         {
@@ -59,13 +64,13 @@ void BresenhamLineCaseA(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
 
             x++;
 
-            if (pointBound < 0)
+            if (determinant < 0)
             {
-                pointBound = pointBound + doubleHeight; // pnext = pk + 2dy
+                determinant = determinant + doubleHeight; // pnext = pk + 2dy
             }
             else
             {
-                pointBound = pointBound + doubleHeight - doubleWidth; // pnext = pk + 2dy - 2dx
+                determinant = determinant + doubleHeight - doubleWidth; // pnext = pk + 2dy - 2dx
 
                 y += incrementor;
             }
@@ -75,6 +80,9 @@ void BresenhamLineCaseA(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
     {
         // 기울기가 가파르면(1보다 크면) 둔각이다.
         // 이 경우에는 y축을 기준으로 p값을 체크해서 x를 증가시켜야 한다.
+        // -----
+
+        // 팔분면 기준 둔각에 해당하는 위치는 제 2팔분면, 제 3팔분면, 제 6팔분면, 제 7팔분면이다.
         // -----
 
         // 처리 기준이 y축 양의 방향이기 때문에 x값이 작은 점을 기준으로 삼는다.
@@ -88,7 +96,9 @@ void BresenhamLineCaseA(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
         }
         else
         {
-            // 제 3팔분면, 제 4팔분면, 제 5팔분면, 제 6팔분면을 무효화시킨다.
+            // 1) 제 3팔분면을 제 7팔분면에 위치시킨다.
+            // 2) 제 6팔분면을 제 2팔분면에 위치시킨다.
+            // -----
             x = x2;
             y = y2;
 
@@ -102,7 +112,7 @@ void BresenhamLineCaseA(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
             incrementor = -1;
         }
 
-        pointBound = doubleWidth - height; // p0 = 2dx - dy
+        determinant = doubleWidth - height; // p0 = 2dx - dy
 
         while (y <= endY)
         {
@@ -111,13 +121,13 @@ void BresenhamLineCaseA(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
 
             y++;
 
-            if (pointBound < 0)
+            if (determinant < 0)
             {
-                pointBound = pointBound + doubleWidth; // pnext = pk + 2dx
+                determinant = determinant + doubleWidth; // pnext = pk + 2dx
             }
             else
             {
-                pointBound = pointBound + doubleWidth - doubleHeight; // pnext = pk + 2dx - 2dy
+                determinant = determinant + doubleWidth - doubleHeight; // pnext = pk + 2dx - 2dy
 
                 x += incrementor;
             }
@@ -148,6 +158,9 @@ void BresenhamLineCaseB(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
 
     if (width > height)
     {
+        // 팔분면 기준 예각에 해당하는 위치는 제 1팔분면, 제 4팔분면, 제 5팔분면, 제 8팔분면이다.
+        // -----
+
         // 처리 기준이 x축 양의 방향이기 때문에 x값이 작은 점을 기준으로 삼는다.
         if (x1 < x2)
         {
@@ -159,7 +172,9 @@ void BresenhamLineCaseB(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
         }
         else
         {
-            // 제 3팔분면, 제 4팔분면, 제 5팔분면, 제 6팔분면을 무효화시킨다.
+            // 1) 제 4팔분면을 제 8팔분면에 위치시킨다.
+            // 2) 제 5팔분면을 제 1팔분면에 위치시킨다.
+            // -----
             x = x2;
             y = y2;
 
@@ -202,6 +217,9 @@ void BresenhamLineCaseB(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
     }
     else
     {
+        // 팔분면 기준 둔각에 해당하는 위치는 제 2팔분면, 제 3팔분면, 제 6팔분면, 제 7팔분면이다.
+        // -----
+
         // 처리 기준이 y축 양의 방향이기 때문에 x값이 작은 점을 기준으로 삼는다.
         if (y1 < y2)
         {
@@ -213,7 +231,9 @@ void BresenhamLineCaseB(int x1, int y1, int x2, int y2, std::vector<BresenhamPoi
         }
         else
         {
-            // 제 3팔분면, 제 4팔분면, 제 5팔분면, 제 6팔분면을 무효화시킨다.
+            // 1) 제 3팔분면을 제 7팔분면에 위치시킨다.
+            // 2) 제 6팔분면을 제 2팔분면에 위치시킨다.
+            // -----
             x = x2;
             y = y2;
 
